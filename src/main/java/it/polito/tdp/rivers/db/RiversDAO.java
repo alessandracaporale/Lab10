@@ -1,9 +1,8 @@
 package it.polito.tdp.rivers.db;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-import it.polito.tdp.rivers.model.River;
+import it.polito.tdp.rivers.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,5 +34,29 @@ public class RiversDAO {
 		}
 
 		return rivers;
+	}
+	
+	public List<Flow> getFlowsByRiver (River river) {
+		String sql = "SELECT id, day, flow, river "
+				+ "FROM flow "
+				+ "WHERE river = ?";
+		List<Flow> flows = new ArrayList<>();
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, river.getId());
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				Flow flow = new Flow (rs.getInt("id"), rs.getDate("day").toLocalDate(), rs.getFloat("flow"), river);
+				flows.add(flow);
+			}
+			conn.close();
+			return flows;
+		}
+		catch (SQLException e) {
+			throw new RuntimeException ("Errore in getFlowsByRiver");
+		}
 	}
 }
