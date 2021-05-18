@@ -121,7 +121,6 @@ public class FXMLController {
     	System.out.println("Q = "+Q
     			+"\n" + "c0 = "+c);
     	
-    	
     	List<Double> lista = new ArrayList<>();
     	lista.add(c);
     	
@@ -155,7 +154,7 @@ public class FXMLController {
     		if (fOut < fOutMin) {
     			numGiorni++;
     		}
-    		System.out.println(c + " - fOut=" +fOut + " - fIn=" +fIn);
+    		System.out.println("c=" +c + " - fOut=" +fOut + " - fIn=" +fIn);
     	}
     	
     	double cMed = 0;
